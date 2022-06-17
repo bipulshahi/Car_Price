@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car Sale Value Prediction</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+  function onClickedEstimatePrice() {
+  //console.log("Estimate price button clicked");
+
+    var age = document.getElementById("ia");
+    var kms = document.getElementById("ik");
+    var mlg = document.getElementById("im");
+    var eng = document.getElementById("ie");
+    var power = document.getElementById("ip");
+    var sts = document.getElementById("is");
+    var loc = document.getElementById("il");
+    var ftype = document.getElementById("if");
+    var ttype = document.getElementById("it");
+    var otype = document.getElementById("io");
+    var cname = document.getElementById("ic");
+    var estPrice = document.getElementById("uiEstimatedPrice");
+
+
+  var url = "http://127.0.0.1:5000/predict_price"; //Use this if you are NOT using nginx which is first 7 tutorials
+  //var url = "/api/predict_home_price"; // Use this if  you are using nginx. i.e tutorial 8 and onwards
+
+  $.post(url, {
+
+      age: parseFloat(age.value),
+      kms: parseFloat(kms.value),
+      mileage: parseFloat(mlg.value),
+      engine: parseFloat(eng.value),
+      power: parseFloat(power.value),
+      seats: parseFloat(sts.value),
+      location: loc.value,
+      fuel_type: ftype.value,
+      transmission: ttype.value,
+      owner: otype.value,
+      car_name: cname.value
+
+  },function(data, status) {
+      console.log(data.Estimated_Price);
+      estPrice.innerHTML = "<h2>" + data.Estimated_Price.toString() + "</h2>";
+      console.log(status);
+  });
+}
+
+</script>
+
+	<link rel="stylesheet" href="app.css">
+
+</head>
+
+<body>
+<div class="img"></div>
+<form class="form">
+    <h1>Car Resale Value Prediction</h1>
+	<h2>Age</h2>
+    <input class="area"  type="text" id="ia" class="floatLabel" name="Squareft" value="7">
+
+    <h2>Kilometers Driven</h2>
+    <input class="area"  type="text" id="ik" class="floatLabel" name="Squareft" value="25000">
+
+    <h2>Mileage</h2>
+    <input class="area"  type="text" id="im" class="floatLabel" name="Squareft" value="15">
+
+    <h2>Engine</h2>
+    <input class="area"  type="text" id="ie" class="floatLabel" name="Squareft" value="1200">
+
+    <h2>Power</h2>
+    <input class="area"  type="text" id="ip" class="floatLabel" name="Squareft" value="120">
+
+    <h2>Seats</h2>
+    <input class="area"  type="text" id="is" class="floatLabel" name="Squareft" value="5">
+
+
+
+		<h2>Location</h2>
+	<div>
+  <select class="location" name="" id="il">
+    <option value="" disabled="disabled" selected="selected">Choose an Option</option>
+		<option>Delhi</option>
+        <option>Mumbai</option>
+        <option>Jaipur</option>
+        <option>Kochi</option>
+  </select>
+</div>
+
+    <h2>Fuel Type</h2>
+	<div>
+  <select class="location" name="" id="if">
+    <option value="" disabled="disabled" selected="selected">Choose an Option</option>
+        <option>Petrol</option>
+        <option>Diesel</option>
+        <option>LPG</option>
+        <option>CNG</option>
+  </select>
+</div>
+
+    <h2>Transmission Type</h2>
+	<div>
+  <select class="location" name="" id="it">
+    <option value="" disabled="disabled" selected="selected">Choose an Option</option>
+		<option>Automatic</option>
+        <option>Manual</option>
+
+  </select>
+</div>
+
+    <h2>Owner Type</h2>
+	<div>
+  <select class="location" name="" id="io">
+    <option value="" disabled="disabled" selected="olt">Choose an Option</option>
+		<option>first</option>
+        <option>second</option>
+        <option>third</option>
+        <option>fourth & above</option>
+  </select>
+</div>
+
+    <h2>Car Name</h2>
+	<div>
+  <select class="location" name="" id="ic">
+    <option value="" disabled="disabled" selected="selected">Choose an Option</option>
+		<option>mahindra xylo</option>
+        <option>maruti alto</option>
+        <option>renault kwid</option>
+        <option>nissan terrano</option>
+        </select>
+</div>
+
+
+	<button class="submit" onclick="onClickedEstimatePrice()" type="button">Estimated Price</button>
+
+	<div id="uiEstimatedPrice" class="result">	<h2>Result</h2> </div>
+
+</form>
+</body>
+</html>
